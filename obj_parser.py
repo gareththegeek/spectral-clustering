@@ -1,3 +1,4 @@
+import math
 import numpy as np
 
 # Parse .obj file to get an array of vertices and an array of face indices
@@ -62,3 +63,28 @@ def build_adjacency_matrix(faces):
     assert np.isfinite(matrix).all()
 
     return matrix
+
+def build_face_normals(vertices, faces):
+
+    print("\nBuilding face normals")
+
+    normals = []
+
+    for face in faces:
+        if (len(face) < 3):
+            normals.append([0,1,0])
+            continue
+        v0 = np.array(vertices[face[0]])
+        v1 = np.array(vertices[face[1]])
+        v2 = np.array(vertices[face[2]])
+        da = v2-v0
+        db = v1-v0
+        n = np.cross(da, db)
+        mag =math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2])
+        n = n/mag
+        normals.append(n)
+
+    print("Calculated " + str(len(normals)) + " surface normals")
+    print(normals)
+
+    return normals
