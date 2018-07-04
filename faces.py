@@ -3,25 +3,28 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-import csv
+import face_parser as fp
 
 data = []
 
-with open('data\\faces.csv', 'rt') as csvfile:
-    reader = csv.reader(csvfile, delimiter=',', quotechar='|')
-    for row in reader:
-        data.append(row)
+filename = "data/faces.obj"
 
-print("Read csv vertex data")
-print(data)
-print("-------------------")
-print("")
+vertices, matrix = fp.build_adjacency_matrix(filename)
 
-algorithm = cluster.SpectralClustering(n_clusters=5, eigen_solver='arpack', affinity="nearest_neighbors")
-data = StandardScaler().fit_transform(data) * 2
-algorithm.fit(data)
+#algorithm = cluster.SpectralClustering(n_clusters=5, eigen_solver='arpack', affinity="nearest_neighbors")
+#algorithm = cluster.SpectralClustering(n_clusters=5, affinity="precomputed")
+#matrix = StandardScaler().fit_transform(matrix)
+#algorithm.fit(matrix)
 
-y_pred = algorithm.labels_.astype(np.int)
+#y_pred = algorithm._labels.astype(np.int)
+
+print("\nPerforming spectral clustering")
+
+y_pred = cluster.spectral_clustering(n_clusters=5, affinity=matrix)
+
+print(y_pred)
+print(y_pred.size)
+exit()
 
 #out = ""
 #print("Predictions")
