@@ -7,14 +7,14 @@ import obj_parser as op
 
 data = []
 
-filename = "data/faces.obj"
+filename = "data/lowpolycity.obj"
 
 vertices, faces = op.get_mesh_data(filename)
 matrix = op.build_adjacency_matrix(faces)
 
 print("\nPerforming spectral clustering")
 
-y_pred = cluster.spectral_clustering(n_clusters=19, affinity=matrix)
+y_pred = cluster.spectral_clustering(n_clusters=6, affinity=matrix)
 
 print("\nProduced " + str(y_pred.size) + " labels")
 
@@ -26,8 +26,8 @@ cs = y_pred.tolist()
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-ax.set_xlim(-2000, 2000)
-ax.set_ylim(-2000, 2000)
-ax.set_zlim(-2000, 2000)
-ax.scatter(xs, ys, zs, zdir='z', s=2, c=cs, depthshade=False)
+ax.set_xlim(-2, 2)
+ax.set_ylim(-2, 2)
+ax.set_zlim(0, 4)
+ax.scatter(xs, ys, zs, zdir='y', s=2, c=cs, depthshade=False)
 plt.show()

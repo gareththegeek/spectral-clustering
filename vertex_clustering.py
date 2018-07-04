@@ -6,7 +6,7 @@ import numpy as np
 import math
 import obj_parser as op
 
-filename = "data/faces.obj"
+filename = "data/lowpolycity.obj"
 
 vertices, faces = op.get_mesh_data(filename)
 normals = op.build_face_normals(vertices, faces)
@@ -21,7 +21,7 @@ data = np.column_stack((data, magnitudes))
 #data = magnitudes.reshape(-1, 1)
 #data = normals
 print("\nCombined data set")
-print(data)
+print(data.astype(np.float))
 
 print("\nPerforming spectral clustering")
 
@@ -42,5 +42,9 @@ cs = y_pred.tolist()
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-ax.scatter(xs, ys, zs, zdir='z', s=2, c=cs, depthshade=False)
+ax.set_xlim(-2, 2)
+ax.set_ylim(-2, 2)
+ax.set_zlim(0, 4)
+
+ax.scatter(xs, ys, zs, zdir='y', s=2, c=cs, depthshade=False)
 plt.show()

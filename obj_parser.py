@@ -81,8 +81,13 @@ def build_face_normals(vertices, faces):
         db = v1-v0
         n = np.cross(da, db)
         mag =math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2])
+        if (mag==0):
+            normals.append([0,1,0])
+            continue
         n = n/mag
         normals.append(n)
+
+    assert np.isfinite(normals).all()
 
     print("Calculated " + str(len(normals)) + " surface normals")
     print(normals)
