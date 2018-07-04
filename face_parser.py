@@ -1,5 +1,8 @@
+# Build an adjacency matrix by using face data stored within .obj file
+
 import numpy as np
 
+file = "data/faces.obj"
 count = 0
 
 found_faces = False
@@ -9,7 +12,9 @@ found_faces = False
 vertices = []
 faces = []
 
-with open("data/faces.csv") as f:
+print("Parsing obj file: '" + file + "'")
+
+with open(file) as f:
     for line in f:
         if (line.startswith("v ")):
             line = line.replace("v ", "")
@@ -34,6 +39,21 @@ with open("data/faces.csv") as f:
                 
                 found_faces = False
 
+print("\nParsed obj file")
+print("Vertices:")
 print(vertices)
+print("Faces:")
 print(faces)
 
+print("\nBuilding adjacency matrix")
+matrix = np.zeros((len(faces), len(faces)), dtype=int)
+for i in range(len(faces)):
+    matrix[i, i] = len(faces[i])
+    for index in faces[i]:
+        matrix[i, index] = -1
+        matrix[index, i] = -1
+
+print("\nBuilt " + str(matrix.shape[0]) + " x " + str(matrix.shape[1]) + " matrix")
+print(matrix)
+
+print("\nDone")
