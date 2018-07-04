@@ -20,11 +20,9 @@ vertices, matrix = fp.build_adjacency_matrix(filename)
 
 print("\nPerforming spectral clustering")
 
-y_pred = cluster.spectral_clustering(n_clusters=5, affinity=matrix)
+y_pred = cluster.spectral_clustering(n_clusters=19, affinity=matrix)
 
-print(y_pred)
-print(y_pred.size)
-exit()
+print("\nProduced " + str(y_pred.size) + " labels")
 
 #out = ""
 #print("Predictions")
@@ -35,16 +33,16 @@ exit()
 #print(data.size)
 #print(y_pred.size)
 
-npdata = np.array(data)
-xs = npdata[:,0].tolist()
-ys = npdata[:,1].tolist()
-zs = npdata[:,2].tolist()
+npvertices = np.array(vertices)
+xs = npvertices[:,0].tolist()
+ys = npvertices[:,1].tolist()
+zs = npvertices[:,2].tolist()
 cs = y_pred.tolist()
-
-
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-
-ax.scatter(xs, ys, zs, zdir='z', s=20, c=cs, depthshade=False)
+ax.set_xlim(-2000, 2000)
+ax.set_ylim(-2000, 2000)
+ax.set_zlim(-2000, 2000)
+ax.scatter(xs, ys, zs, zdir='z', s=2, c=cs, depthshade=False)
 plt.show()
