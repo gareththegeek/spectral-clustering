@@ -9,7 +9,8 @@ data = []
 
 filename = "data/faces.obj"
 
-vertices, matrix = fp.build_adjacency_matrix(filename)
+vertices, faces = fp.get_mesh_data(filename)
+matrix = fp.build_adjacency_matrix(faces)
 
 #algorithm = cluster.SpectralClustering(n_clusters=5, eigen_solver='arpack', affinity="nearest_neighbors")
 #algorithm = cluster.SpectralClustering(n_clusters=5, affinity="precomputed")

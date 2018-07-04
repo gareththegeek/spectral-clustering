@@ -1,7 +1,7 @@
 import numpy as np
 
-# Build a adjacency matrix by using face data stored within .obj file
-def build_adjacency_matrix(filename):
+# Parse .obj file to get an array of vertices and an array of face indices
+def get_mesh_data(filename):
 
     count = 0
 
@@ -43,6 +43,11 @@ def build_adjacency_matrix(filename):
     print("\nFaces:")
     print(faces)
 
+    return vertices, faces
+
+    # Build a adjacency matrix by using face indices
+def build_adjacency_matrix(faces):
+
     print("\nBuilding adjacency matrix")
     matrix = np.zeros((len(faces), len(faces)), dtype=int)
     for i in range(len(faces)):
@@ -56,4 +61,4 @@ def build_adjacency_matrix(filename):
 
     assert np.isfinite(matrix).all()
 
-    return vertices, matrix
+    return matrix
