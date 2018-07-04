@@ -3,36 +3,20 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-import face_parser as fp
+import obj_parser as op
 
 data = []
 
 filename = "data/faces.obj"
 
-vertices, faces = fp.get_mesh_data(filename)
-matrix = fp.build_adjacency_matrix(faces)
-
-#algorithm = cluster.SpectralClustering(n_clusters=5, eigen_solver='arpack', affinity="nearest_neighbors")
-#algorithm = cluster.SpectralClustering(n_clusters=5, affinity="precomputed")
-#matrix = StandardScaler().fit_transform(matrix)
-#algorithm.fit(matrix)
-
-#y_pred = algorithm._labels.astype(np.int)
+vertices, faces = op.get_mesh_data(filename)
+matrix = op.build_adjacency_matrix(faces)
 
 print("\nPerforming spectral clustering")
 
 y_pred = cluster.spectral_clustering(n_clusters=19, affinity=matrix)
 
 print("\nProduced " + str(y_pred.size) + " labels")
-
-#out = ""
-#print("Predictions")
-#for i in range(y_pred.size):
-#    out += str(y_pred[i]) + ", "
-#print(out)
-
-#print(data.size)
-#print(y_pred.size)
 
 npvertices = np.array(vertices)
 xs = npvertices[:,0].tolist()
